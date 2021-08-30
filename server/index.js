@@ -13,7 +13,11 @@ const headers = {
   "access-control-max-age": 10
 };
 
-
+//middleware
+app.use(function (req, res, next) {
+  res.set(headers);
+  next();
+});
 
 // TODO: Fill with strings of your favorite quotes :)
 const quotes = [
@@ -34,15 +38,32 @@ function getRandomInt(min, max) {
 
 
 //Express
-// app.get('/quote', )
-app.get(['/quote', '/quote/'], (req, res) => {
+
+app.get('/quote', (req, res) => {
+  // console.log('get post hit ')
   let randomQuote = quotes[getRandomInt(0, quotes.length)];
   res.status(200).send(randomQuote);
 });
 
-app.all('/', (req, res) => {
-  res.status(301);
-  res.redirect('/quote');
+//   // TODO: GET ONE
+//   if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
+//     // console.log('You hit the GET request on endpoint /quote or /quote/')
+//     res.writeHead(200, headers);
+//     res.write(quotes[getRandomInt(0, quotes.length)])
+//     res.end();
+//   }
+
+
+
+// app.all('/', (req, res) => {
+//   res.status(301);
+//   res.redirect('/quote');
+// })
+
+app.post('/post', (req, res) => {
+  // console.log('post request hit:', typeof req.body.newQuote);
+  quotes.push(req.body.newQuote);
+  res.status(200).send(req.body.newQuote);
 })
 
 // //Raw Node
@@ -56,13 +77,7 @@ app.all('/', (req, res) => {
 //     res.end();
 //   };
 
-//   // TODO: GET ONE
-//   if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
-//     // console.log('You hit the GET request on endpoint /quote or /quote/')
-//     res.writeHead(200, headers);
-//     res.write(quotes[getRandomInt(0, quotes.length)])
-//     res.end();
-//   }
+
 //   // TODO: POST/CREATE
 //   else if ((req.url == '/post' || req.url == '/post') && req.method == "POST") {
 
