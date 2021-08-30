@@ -12,12 +12,13 @@ const port = 3000;
 
 // TODO: Fill with strings of your favorite quotes :)
 const quotes = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five'
+  'That will do Pig, that will do',
+  'What do tigers dream of when they take a little snooze?',
+  'I am vengence! I am the night! I am Batman!',
+  'I am McLovin',
+  'Billyyyy'
 ];
+
 
 //Utility Function to return a random integer
 function getRandomInt(min, max) {
@@ -26,29 +27,34 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-const handleRequest = function(req, res) {
+const handleRequest = function (req, res) {
   console.log(`Endpoint: ${req.url} Method: ${req.method}`);
+
+  if (req.method === 'GET') {
+    console.log('req.body', req.body);
+
+  }
 
   // redirect users to /quote if they try to hit the homepage. This should already work, no changes needed
   if (req.url == '/') {
     console.log('redirecting');
-    res.writeHead(301, {...headers, Location: `http://localhost:${port}/quote`}) //redirect to quote
+    res.writeHead(301, { ...headers, Location: `http://localhost:${port}/quote` }) //redirect to quote
     res.end();
-  }
+  };
 
   // TODO: GET ONE
-  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "FILL ME IN") {
-    //YOUR CODE HERE
-
+  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
+    res.writeHead(200, headers);
+    res.end(quotes[getRandomInt(0, 4)]);
   }
   // TODO: POST/CREATE
-  else if ((req.url == 'FILL ME IN' || req.url == 'FILL ME IN') && req.method == "FILL ME IN") {
+  else if ((req.url == 'FILL ME IN' || req.url == 'FILL ME IN') && req.method == "POST") {
     //YOUR CODE HERE
   }
 
-//CATCH ALL ROUTE
+  //CATCH ALL ROUTE
   else {
-    res.writeHead(404,headers);
+    res.writeHead(404, headers);
     res.end('Page not found');
 
   }
