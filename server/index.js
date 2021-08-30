@@ -1,4 +1,9 @@
-const http = require('http');
+// const http = require('http');
+const express = require('express')
+const app = express();
+const port = 3000;
+app.use(express.json());
+
 
 //headers to allows CORS requests
 const headers = {
@@ -8,7 +13,7 @@ const headers = {
   "access-control-max-age": 10
 };
 
-const port = 3000;
+
 
 // TODO: Fill with strings of your favorite quotes :)
 const quotes = [
@@ -27,44 +32,76 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-const handleRequest = function (req, res) {
-  console.log(`Endpoint: ${req.url} Method: ${req.method}`);
 
-  //test method
-  // if (req.method === 'GET') {
-  //   console.log('request', req);
+//Express
+// app.get('/quote', )
+app.get(['/quote', '/quote/'], (req, res) => {
+  let randomQuote = quotes[getRandomInt(0, quotes.length)];
+  res.status(200).send(randomQuote);
+});
 
-  // }
+app.all('/', (req, res) => {
+  res.status(301);
+  res.redirect('/quote');
+})
 
-  // redirect users to /quote if they try to hit the homepage. This should already work, no changes needed
-  if (req.url == '/') {
-    console.log('redirecting');
-    res.writeHead(301, { ...headers, Location: `http://localhost:${port}/quote` }) //redirect to quote
-    res.end();
-  };
+// //Raw Node
+// const handleRequest = function (req, res) {
+//   console.log(`Endpoint: ${req.url} Method: ${req.method}`);
 
-  // TODO: GET ONE
-  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
-    console.log('You hit the GET request on endpoint /quote or /quote/')
-    res.writeHead(200, headers);
-    res.write(quotes[getRandomInt(0, 4)])
-    res.end();
-  }
-  // TODO: POST/CREATE
-  else if ((req.url == 'FILL ME IN' || req.url == 'FILL ME IN') && req.method == "POST") {
-    //YOUR CODE HERE
-  }
+//   // redirect users to /quote if they try to hit the homepage. This should already work, no changes needed
+//   if (req.url == '/') {
+//     console.log('redirecting');
+//     res.writeHead(301, { ...headers, Location: `http://localhost:${port}/quote` }) //redirect to quote
+//     res.end();
+//   };
 
-  //CATCH ALL ROUTE
-  else {
-    res.writeHead(404, headers);
-    res.end('Page not found');
+//   // TODO: GET ONE
+//   if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
+//     // console.log('You hit the GET request on endpoint /quote or /quote/')
+//     res.writeHead(200, headers);
+//     res.write(quotes[getRandomInt(0, quotes.length)])
+//     res.end();
+//   }
+//   // TODO: POST/CREATE
+//   else if ((req.url == '/post' || req.url == '/post') && req.method == "POST") {
 
-  }
-}
+//     let chunks = [];
+//     console.log('req', req.on('data', (chunk) => {
+//       // console.log('chunk', chunk) ===> <Buffer 73 64 66>
+//       chunks += chunk
+//     }).on('end', () => {
+//       // console.log('chunks',  chunks) ===> test quote
+//       quotes.push(chunks);
+//       console.log(`list of random quotes ${quotes}`);
 
-const server = http.createServer(handleRequest);
-server.listen(port);
+//       res.writeHead(201, headers);
+//       res.write(chunks);
+//       res.end();
+//     })
+//     );
+//     // console.log('you hit the POST request on endpoint /post within index.js');
+//     //YOUR CODE HERE
+//   }
 
-console.log('Server is running in the terminal!');
-console.log(`Listening on http://localhost:${port}`);
+//   //CATCH ALL ROUTE
+//   else {
+//     res.writeHead(404, headers);
+//     res.end('Page not found');
+//   }
+// }
+
+//Express
+
+
+
+//Raw Node
+// const server = http.createServer(handleRequest);
+// server.listen(port);
+
+app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}`);
+})
+
+// console.log('Server is running in the terminal!');
+// console.log(`Listening on http://localhost:${port}`);
