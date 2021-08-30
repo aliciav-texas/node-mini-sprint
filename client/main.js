@@ -25,6 +25,18 @@ $(document).ready(function () {
 
   function addQuote(quote) {
 
+
+    //onclick
+    $.post('http://localhost:3000/post', quote, (data) => {
+
+      // console.log(data) ===> test quote
+      $('#response').text(data);
+      // alert(data);
+      // $('#quote').text(quote);
+
+    });
+
+
     //YOUR CODE HERE, Add a POST request
 
   }
