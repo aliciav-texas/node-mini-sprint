@@ -16,7 +16,7 @@ $(document).ready(function () {
     //YOUR CODE HERE, Add a GET request
     $.get('http://localhost:3000/quote', (quote) => {
 
-      console.log('qoute', quote);
+      // console.log('qoute', quote);
       $('#quote').text(quote);
 
     })
@@ -30,9 +30,7 @@ $(document).ready(function () {
     $.post('http://localhost:3000/post', quote, (data) => {
 
       // console.log(data) ===> test quote
-      $('#response').text(data);
-      // alert(data);
-      // $('#quote').text(quote);
+      $('#response').text(`Here is your most recently added submission! "${data}"! This quote will now be added to our random quote generator!`);
 
     });
 
