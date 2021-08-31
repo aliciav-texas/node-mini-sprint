@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express();
 const port = 3000;
-app.use(express.json());
+
 
 
 //headers to allows CORS requests
@@ -18,6 +18,8 @@ app.use(function (req, res, next) {
   res.set(headers);
   next();
 });
+
+app.use(express.json());
 
 // TODO: Fill with strings of your favorite quotes :)
 const quotes = [
@@ -39,80 +41,32 @@ function getRandomInt(min, max) {
 
 //Express
 
+// TODO: GET ONE
 app.get('/quote', (req, res) => {
   // console.log('get post hit ')
   let randomQuote = quotes[getRandomInt(0, quotes.length)];
   res.status(200).send(randomQuote);
 });
 
-//   // TODO: GET ONE
-//   if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
-//     // console.log('You hit the GET request on endpoint /quote or /quote/')
-//     res.writeHead(200, headers);
-//     res.write(quotes[getRandomInt(0, quotes.length)])
-//     res.end();
-//   }
 
-
-
-// app.all('/', (req, res) => {
-//   res.status(301);
-//   res.redirect('/quote');
-// })
-
+// TODO: POST/CREATE
 app.post('/post', (req, res) => {
   // console.log('post request hit:', typeof req.body.newQuote);
   quotes.push(req.body.newQuote);
   res.status(200).send(req.body.newQuote);
 })
 
-// //Raw Node
-// const handleRequest = function (req, res) {
-//   console.log(`Endpoint: ${req.url} Method: ${req.method}`);
-
-//   // redirect users to /quote if they try to hit the homepage. This should already work, no changes needed
-//   if (req.url == '/') {
-//     console.log('redirecting');
-//     res.writeHead(301, { ...headers, Location: `http://localhost:${port}/quote` }) //redirect to quote
-//     res.end();
-//   };
 
 
-//   // TODO: POST/CREATE
-//   else if ((req.url == '/post' || req.url == '/post') && req.method == "POST") {
+app.all('/', (req, res) => {
+  res.status(301).redirect('/quote');
+})
 
-//     let chunks = [];
-//     console.log('req', req.on('data', (chunk) => {
-//       // console.log('chunk', chunk) ===> <Buffer 73 64 66>
-//       chunks += chunk
-//     }).on('end', () => {
-//       // console.log('chunks',  chunks) ===> test quote
-//       quotes.push(chunks);
-//       console.log(`list of random quotes ${quotes}`);
 
-//       res.writeHead(201, headers);
-//       res.write(chunks);
-//       res.end();
-//     })
-//     );
-//     // console.log('you hit the POST request on endpoint /post within index.js');
-//     //YOUR CODE HERE
-//   }
 
 //   //CATCH ALL ROUTE
-//   else {
-//     res.writeHead(404, headers);
-//     res.end('Page not found');
-//   }
-// }
+//   Covered in Express
 
-//Express
-
-
-
-//Raw Node
-// const server = http.createServer(handleRequest);
-// server.listen(port);
 
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);

@@ -10,10 +10,10 @@ $(document).ready(function () {
   $('#submit').click((e) => {
     e.preventDefault();
     let quote = $('input').val();
+    getQuote();
     addQuote(quote);
+
   });
-
-
 
 
   function getQuote() {
@@ -42,6 +42,5 @@ $(document).ready(function () {
         console.log('oops there was an error', error);
       })
     //YOUR CODE HERE, Add a POST request
-
   }
 });
