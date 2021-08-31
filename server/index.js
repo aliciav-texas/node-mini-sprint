@@ -33,9 +33,6 @@ app.use(express.static('../react-client/dist'));
 //   'Billyyyy'
 // ];
 
-
-
-
 //Utility Function to return a random integer
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -56,20 +53,27 @@ app.get('/quote', (req, res) => {
     }
   });
   // console.log('get post hit ')
-
 });
 
 
 // TODO: POST/CREATE
 app.post('/post', (req, res) => {
-  console.log('post request hit:', typeof req.body.newQuote);
-  quotes.push(req.body.newQuote);
-  res.status(200).send(req.body.newQuote);
+  console.log('post request hit:', req.body.newQuote);
+
+  let clientSubmission = req.body.newQuote
+  //connect to DB and send a post
+  mysqldb.postQuoteToDB(clientSubmission, (err, results) => {
+    if (err) {
+      console.log('you hit an error on ./server/index.js');
+      res.status(400).send('There was an error -- from server/index.js');
+    } else {
+      res.status(200).send('succesfully posted to the DB');
+    }
+  });
 });
 
 //   //CATCH ALL ROUTE
 //   Covered in Express
-
 
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);

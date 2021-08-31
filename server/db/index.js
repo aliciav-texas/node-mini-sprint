@@ -29,6 +29,25 @@ const getQuotesFromDB = (callback) => {
   })
 }
 
+
+const postQuoteToDB = (incomingQuote, callback) => {
+
+  console.log(`the incoming quote from the server ${incomingQuote}`)
+
+  let sqlString = `insert into randomMovieQuotes (quote) values ("${incomingQuote}");`;
+
+  connection.query(sqlString, (err, data) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, data)
+    }
+  })
+
+}
+
+
 module.exports = {
-  getQuotesFromDB
+  getQuotesFromDB,
+  postQuoteToDB
 }
