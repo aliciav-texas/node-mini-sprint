@@ -21,6 +21,8 @@ app.use(function (req, res, next) {
 
 app.use(express.json());
 
+//serve the static file
+app.use(express.static('../react-client/dist'));
 // TODO: Fill with strings of your favorite quotes :)
 const quotes = [
   'That will do Pig, that will do',
@@ -44,8 +46,9 @@ function getRandomInt(min, max) {
 // TODO: GET ONE
 app.get('/quote', (req, res) => {
   // console.log('get post hit ')
-  let randomQuote = quotes[getRandomInt(0, quotes.length)];
-  res.status(200).send(randomQuote);
+  // let arrayOfQuotes = quotes
+  // let randomQuote = quotes[getRandomInt(0, quotes.length)];
+  res.status(200).send(quotes);
 });
 
 
