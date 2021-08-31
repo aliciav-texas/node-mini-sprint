@@ -12,9 +12,10 @@ class App extends React.Component {
       submittedQuote: 'Submit your favorite movie quote!',
       numOfQuotes: 0
     }
-    this.getQuote = this.getQuote.bind(this),
-      this.handleSubmit = this.handleSubmit.bind(this),
-      this.getSubmittedQuote = this.getSubmittedQuote.bind(this);
+    this.getQuote = this.getQuote.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getSubmittedQuote = this.getSubmittedQuote.bind(this);
+    this.getRandomInt = this.getRandomInt.bind(this);
   }
 
   componentDidMount() {
@@ -47,7 +48,7 @@ class App extends React.Component {
       })
   }
 
-  getSubmittedQuote() {
+  getSubmittedQuote(event) {
     console.log(event.target.value)
     this.setState({
       // submittedQuote: `Thanks for your latest submission! "${event.target.value}" Was added to our random movie quote server!`,
@@ -67,21 +68,21 @@ class App extends React.Component {
       .then((result) => {
         console.log('these are results', result.data)
       })
-
-    // this.getSubmittedQuote();
-    
-    // alert(`you clicked the submit button and this was value of this.state.submittedQuote: ${ this.state.submittedQuote }`);
-
-    // alert(`Your movied quote "${this.state.submittedQuote}" was submitted! It will now be addeed to the Random Generator`)
-
   }
+  // this.getSubmittedQuote();
+
+  // alert(`you clicked the submit button and this was value of this.state.submittedQuote: ${ this.state.submittedQuote }`);
+
+  // alert(`Your movied quote "${this.state.submittedQuote}" was submitted! It will now be addeed to the Random Generator`)
+
+
 
 
   render() {
     return (
       <>
         <h1> Random Movie Quote Generator !! </h1>
-        <h2 id="quote">{this.state.quotes[this.getRandomInt(0, this.state.numOfQuotes)]}</h2>
+        <h2 id="quote" >{this.state.quotes[this.getRandomInt(0, this.state.numOfQuotes)]}</h2>
         <form onSubmit={this.handleSubmit}>
           <input type="text" onChange={this.getSubmittedQuote} />
           <button id="submit">Submit</button>
