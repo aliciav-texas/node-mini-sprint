@@ -11,7 +11,7 @@ class App extends React.Component {
         'I am vengence! I am the night! I am Batman!',
         'I am McLovin',
         'Billyyyy'],
-      submittedQuote: '',
+      submittedQuote: 'Submit your favorite movie quote!',
     }
   }
 
@@ -27,8 +27,13 @@ class App extends React.Component {
     console.log('get quote was invoked')
     let randomIndex = this.getRandomInt(0, this.state.quotes.length);
     let randomQuote = this.state.quotes[randomIndex];
-    return randomQuote
+    return randomQuote;
     // return this.state.quotes[0];
+  }
+
+  handleSubmit() {
+    alert(`Your movied quote "${this.state.value} was submitted! It will now be addeed to the Random Generator`)
+    event.preventDefault();
   }
 
 
@@ -37,10 +42,10 @@ class App extends React.Component {
       <>
         <h1> Random Movie Quote Generator !! </h1>
         <h2 id="quote">{this.getQuote()}</h2>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input type="text" />
           <button id="submit">Submit</button>
-          <p id="response"></p>
+          <p id="response"> {this.state.submittedQuote}</p>
         </form>
 
       </>
