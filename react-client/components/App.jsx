@@ -19,7 +19,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    //set a length on state
     this.getQuote();
   }
 
@@ -48,7 +47,8 @@ class App extends React.Component {
       })
   }
 
-  getSubmittedQuote(event) {
+  getSubmittedQuote() {
+    event.preventDefault();
     console.log(event.target.value)
     this.setState({
       // submittedQuote: `Thanks for your latest submission! "${event.target.value}" Was added to our random movie quote server!`,
@@ -70,13 +70,7 @@ class App extends React.Component {
       })
   }
   // this.getSubmittedQuote();
-
-  // alert(`you clicked the submit button and this was value of this.state.submittedQuote: ${ this.state.submittedQuote }`);
-
   // alert(`Your movied quote "${this.state.submittedQuote}" was submitted! It will now be addeed to the Random Generator`)
-
-
-
 
   render() {
     return (
