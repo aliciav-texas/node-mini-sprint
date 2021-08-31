@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express();
 const port = 3000;
+const mysqldb = require('./db')
 
 
 
@@ -24,13 +25,15 @@ app.use(express.json());
 //serve the static file
 app.use(express.static('../react-client/dist'));
 // TODO: Fill with strings of your favorite quotes :)
-const quotes = [
-  'That will do Pig, that will do',
-  'What do tigers dream of when they take a little snooze?',
-  'I am vengence! I am the night! I am Batman!',
-  'I am McLovin',
-  'Billyyyy'
-];
+// const quotes = [
+//   'That will do Pig, that will do',
+//   'What do tigers dream of when they take a little snooze?',
+//   'I am vengence! I am the night! I am Batman!',
+//   'I am McLovin',
+//   'Billyyyy'
+// ];
+
+
 
 
 //Utility Function to return a random integer
@@ -43,8 +46,17 @@ function getRandomInt(min, max) {
 
 // TODO: GET ONE
 app.get('/quote', (req, res) => {
+  mysqldb.getQuotesFromDB((err, results) => {
+    if (err) {
+      console.log('you hit an error trying to hit your database');
+      res.status(200).send('there was an error')
+    } else {
+      console.log(`here are your results ${results}`);
+      res.status(200).send(results);
+    }
+  });
   // console.log('get post hit ')
-  res.status(200).send(quotes);
+
 });
 
 
