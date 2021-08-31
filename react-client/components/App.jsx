@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios'
 
 
 class App extends React.Component {
@@ -13,6 +14,8 @@ class App extends React.Component {
         'Billyyyy'],
       submittedQuote: 'Submit your favorite movie quote!',
     }
+    this.getQuote = this.getQuote.bind(this),
+      this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   getRandomInt(min, max) {
@@ -22,17 +25,20 @@ class App extends React.Component {
   }
 
   getQuote() {
-    //add a random intFunction
-    // console.log(this.getRandomInt(0, this.state.quotes.length))
-    console.log('get quote was invoked')
-    let randomIndex = this.getRandomInt(0, this.state.quotes.length);
-    let randomQuote = this.state.quotes[randomIndex];
-    return randomQuote;
-    // return this.state.quotes[0];
+    axios.get('http://localhost:3000/quote')
+      .then((data) => {
+        // console.log(`the data from an axios request to express serve ${data}`)
+        // console.log(data.data);
+        console.log(`result of GET request on App.jsx${data.data}`);
+      })
+      .catch((error) => {
+        console.log('oops there was an error', error);
+      })
   }
 
   handleSubmit() {
-    alert(`Your movied quote "${this.state.value} was submitted! It will now be addeed to the Random Generator`)
+
+    alert(`Your movied quote "${this.state.submittedQuote}" was submitted! It will now be addeed to the Random Generator`)
     event.preventDefault();
   }
 
