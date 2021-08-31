@@ -54,13 +54,11 @@ app.post('/post', (req, res) => {
   // console.log('post request hit:', typeof req.body.newQuote);
   quotes.push(req.body.newQuote);
   res.status(200).send(req.body.newQuote);
-})
+});
 
-
-
-app.all('/', (req, res) => {
-  res.status(301).redirect('/quote');
-})
+// app.all('/', (req, res) => {
+//   res.status(301).redirect('/quote');
+// })
 
 
 
@@ -70,7 +68,7 @@ app.all('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
-})
+});
 
 // console.log('Server is running in the terminal!');
 // console.log(`Listening on http://localhost:${port}`);

@@ -15,7 +15,6 @@ $(document).ready(function () {
 
   });
 
-
   function getQuote() {
     //YOUR CODE HERE, Add a GET request
     axios.get('http://localhost:3000/quote')
