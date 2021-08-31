@@ -39,31 +39,21 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
-
-
 //Express
 
 // TODO: GET ONE
 app.get('/quote', (req, res) => {
   // console.log('get post hit ')
-  // let arrayOfQuotes = quotes
-  // let randomQuote = quotes[getRandomInt(0, quotes.length)];
   res.status(200).send(quotes);
 });
 
 
 // TODO: POST/CREATE
 app.post('/post', (req, res) => {
-  // console.log('post request hit:', typeof req.body.newQuote);
+  console.log('post request hit:', typeof req.body.newQuote);
   quotes.push(req.body.newQuote);
   res.status(200).send(req.body.newQuote);
 });
-
-// app.all('/', (req, res) => {
-//   res.status(301).redirect('/quote');
-// })
-
-
 
 //   //CATCH ALL ROUTE
 //   Covered in Express
@@ -72,6 +62,3 @@ app.post('/post', (req, res) => {
 app.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
 });
-
-// console.log('Server is running in the terminal!');
-// console.log(`Listening on http://localhost:${port}`);

@@ -8,21 +8,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       quotes: [],
+      quoteFromClient: '',
       submittedQuote: 'Submit your favorite movie quote!',
       numOfQuotes: 0
     }
     this.getQuote = this.getQuote.bind(this),
-      this.handleSubmit = this.handleSubmit.bind(this)
+      this.handleSubmit = this.handleSubmit.bind(this),
+      this.getSubmittedQuote = this.getSubmittedQuote.bind(this);
   }
 
   componentDidMount() {
     //set a length on state
     this.getQuote();
-    console.log(this.state.quotes)
-    // make a get request
-    // this.setState({
-    //   numOfQuotes: this.state.quotes.length
-    // })
   }
 
   getRandomInt(min, max) {
@@ -41,16 +38,8 @@ class App extends React.Component {
           quotes: quotesFromServer,
           numOfQuotes: quotesFromServer.length
         })
-
-        // this.setState({
-        //   numOfQuotes: this.state.quotes.length,
-
-        // })
-
-        console.log('within the get request, after setState, the number of Quotes is:' + this.state.numOfQuotes);
-
-        console.log(`within the get request, after setState, the quotes array is${this.state.quotes}`)
-
+        // console.log('within the get request, after setState, the number of Quotes is:' + this.state.numOfQuotes);
+        // console.log(`within the get request, after setState, the quotes array is${this.state.quotes}`);
 
       })
       .catch((error) => {
@@ -58,10 +47,33 @@ class App extends React.Component {
       })
   }
 
-  handleSubmit() {
+  getSubmittedQuote() {
+    console.log(event.target.value)
+    this.setState({
+      // submittedQuote: `Thanks for your latest submission! "${event.target.value}" Was added to our random movie quote server!`,
+      quoteFromClient: event.target.value
+    })
+  }
 
-    alert(`Your movied quote "${this.state.submittedQuote}" was submitted! It will now be addeed to the Random Generator`)
+  handleSubmit() {
     event.preventDefault();
+    console.log(`latest submission ${this.state.quoteFromClient}`)
+
+    let latestSubmission = this.state.quoteFromClient;
+
+    axios.post('http://localhost:3000/post', {
+      newQuote: latestSubmission,
+    })
+      .then((result) => {
+        console.log('these are results', result.data)
+      })
+
+    // this.getSubmittedQuote();
+    
+    // alert(`you clicked the submit button and this was value of this.state.submittedQuote: ${ this.state.submittedQuote }`);
+
+    // alert(`Your movied quote "${this.state.submittedQuote}" was submitted! It will now be addeed to the Random Generator`)
+
   }
 
 
@@ -71,7 +83,7 @@ class App extends React.Component {
         <h1> Random Movie Quote Generator !! </h1>
         <h2 id="quote">{this.state.quotes[this.getRandomInt(0, this.state.numOfQuotes)]}</h2>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" />
+          <input type="text" onChange={this.getSubmittedQuote} />
           <button id="submit">Submit</button>
           <p id="response"> {this.state.submittedQuote}</p>
         </form>
